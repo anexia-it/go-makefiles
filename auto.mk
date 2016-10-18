@@ -73,6 +73,12 @@ benchmark: go-pkg-benchmark-all
 .PHONY: benchmark
 endif # ifeq ($(AUTO_ENABLE_BENCHMARK),1)
 
+ifeq ($(AUTO_ENABLE_PROTOBUF),1)
+include $(dir $(lastword $(MAKEFILE_LIST)))protobuf.mk
+_AUTO_BUILD_TARGETS_INDEP+=go-protobuf-build-all
+_AUTO_CLEAN_TARGETS_INDEP+=go-protobuf-clean-all
+endif # ifeq ($(AUTO_ENABLE_PROTOBUF),1)
+
 ifeq ($(AUTO_ENABLE_GENERATE),1)
 include $(dir $(lastword $(MAKEFILE_LIST)))generate.mk
 _AUTO_BUILD_TARGETS_INDEP+=go-generate-all
@@ -82,7 +88,6 @@ generate: go-generate-all
 
 .PHONY: generate
 endif # ifeq ($(AUTO_ENABLE_GENERATE),1)
-
 
 define _CREATE_AUTO_OSARCH_TARGETS
   build/$1: $(_AUTO_BUILD_TARGETS_INDEP) $(subst build-all,build-all/$1,$(_AUTO_BUILD_TARGETS_DEP))
