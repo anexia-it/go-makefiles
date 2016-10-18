@@ -22,21 +22,25 @@ define _CREATE_GO_BIN_TARGETS
 	@GOOS=$(firstword $(subst /, ,$1)) GOARCH=$(lastword $(subst /, ,$1)) \
 		$(GO_BIN) build -o \
 			$(GO_BIN_TARGET)/$1/$(notdir $2) ./$2
+  ifeq ($1,$(GO_HOSTOS)/$(GO_HOSTARCH))
+	@echo "[$1] bin:symlink: $(GO_BIN_TARGET)/$(notdir $2)"
+	@rm -f $(GO_BIN_TARGET)/$(notdir $2)
+	@ln -s $1/$(notdir $2) $(GO_BIN_TARGET)/$(notdir $2)
+  endif
 
   go-bin-clean/$1/$2:
 	@echo "[$1] bin:clean: $2"
 	@rm -f $(GO_BIN_TARGET)/$1/$(notdir $2)
+  ifeq ($1,$(GO_HOSTOS)/$(GO_HOSTARCH))
+	@rm -f $(GO_BIN_TARGET)/$(notdir $2)
+  endif
 
   .PHONY: go-bin-build/$1/$2 go-bin-clean/$1/$2
 
   ifeq ($1,$(GO_HOSTOS)/$(GO_HOSTARCH))
   go-bin-build/$2: go-bin-build/$1/$2
-	@echo "[$1] bin:symlink: $(GO_BIN_TARGET)/$(notdir $2)"
-	@rm -f $(GO_BIN_TARGET)/$(notdir $2)
-	@ln -s $1/$(notdir $2) \
-		$(GO_BIN_TARGET)/$(notdir $2)
+
   go-bin-clean/$2: go-bin-clean/$1/$2
-	@rm -f $(GO_BIN_TARGET)/$(notdir $2)
 
   .PHONY: go-bin-build/$2 go-bin-clean/$2
   endif
