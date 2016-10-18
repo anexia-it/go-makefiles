@@ -3,9 +3,9 @@
 # Overridable variables: GO_GENERATE_FLAGS
 
 # Include env.mk - this provides us with $(GO_BIN)
-include $(dir $(lastword $(MAKEFILE_LIST)))/env.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))env.mk
 # Include go_files.mk - this provides us with $(GO_FILES)
-include $(dir $(lastword $(MAKEFILE_LIST)))/go_files.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))go_files.mk
 
 # Conditionally add flags
 ifndef _HAVE_GENERATE

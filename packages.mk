@@ -4,8 +4,8 @@
 # Overridable variables: GO_PACKAGES, GO_BUILD_FLAGS
 
 
-include $(dir $(lastword $(MAKEFILE_LIST)))/env.mk
-include $(dir $(lastword $(MAKEFILE_LIST)))/binaries.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))env.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))binaries.mk
 
 # Set GO_PACKAGES condtionally, which allows packages.mk to be included
 # multiple times without running the script below multiple times as well.
@@ -19,7 +19,6 @@ GO_PACKAGES=$(shell $(GO_BIN) list ./... | \
                 -e 's|^$(GO_ROOT_PACKAGE_NAME)$$|./|g' \
         $(foreach bin,$(GO_BINARIES), -e 's|^$(bin)$$||g' -e 's|^./$(bin)$$||g') \
         )
-
 # Check if any go packages were found
 ifeq ($(GO_PACKAGES),)
 $(error No Go packages found.)

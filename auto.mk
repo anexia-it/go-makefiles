@@ -24,33 +24,33 @@ ifndef GO_ROOT_PACKAGE_NAME
 $(error GO_ROOT_PACKAGE_NAME not set.)
 endif # ifndef GO_ROOT_PACKAGE_NAME
 
-include $(dir $(lastword $(MAKEFILE_LIST)))/env.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))env.mk
 
 # Check if binary support should be generated
 ifeq ($(AUTO_ENABLE_BINARIES),1)
-include $(dir $(lastword $(MAKEFILE_LIST)))/binaries.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))binaries.mk
 _AUTO_BUILD_TARGETS_DEP+=go-bin-build-all
 _AUTO_CLEAN_TARGETS_DEP+=go-bin-clean-all
 endif # ifeq ($(AUTO_ENABLE_BINARIES),1)
 
 # It is important to include packages.mk only AFTER checking for binaries
-include $(dir $(lastword $(MAKEFILE_LIST)))/packages.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))packages.mk
 
 # Check if gofmt should be enabled
 ifeq ($(AUTO_ENABLE_GOFMT),1)
-include $(dir $(lastword $(MAKEFILE_LIST)))/gofmt.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))gofmt.mk
 _AUTO_BUILD_TARGETS_INDEP+=go-format-all
 endif # ifeq ($(AUTO_ENABLE_GOFMT),1)
 
 # Check if goimports should be enabled
 ifeq ($(AUTO_ENABLE_GOIMPORTS),1)
-include $(dir $(lastword $(MAKEFILE_LIST)))/goimports.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))goimports.mk
 _AUTO_BUILD_TARGETS_INDEP+=go-imports-all
 endif # ifeq ($(AUTO_ENABLE_GOIMPORTS),1)
 
 # Check if tests should be enabled
 ifeq ($(AUTO_ENABLE_TEST),1)
-include $(dir $(lastword $(MAKEFILE_LIST)))/test.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))test.mk
 _AUTO_BUILD_TARGETS_NOCROSS_LATE+=go-pkg-test-all
 
 # Add the test target
@@ -64,7 +64,7 @@ endif # ifeq ($(AUTO_ENABLE_TEST),1)
 
 # Check if benchmarks should be enabled
 ifeq ($(AUTO_ENABLE_BENCHMARK),1)
-include $(dir $(lastword $(MAKEFILE_LIST)))/test.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))test.mk
 _AUTO_BUILD_TARGETS_NOCROSS_LATE+=go-pkg-benchmark-all
 
 # Add the benchmark target
@@ -74,7 +74,7 @@ benchmark: go-pkg-benchmark-all
 endif # ifeq ($(AUTO_ENABLE_BENCHMARK),1)
 
 ifeq ($(AUTO_ENABLE_GENERATE),1)
-include $(dir $(lastword $(MAKEFILE_LIST)))/generate.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))generate.mk
 _AUTO_BUILD_TARGETS_INDEP+=go-generate-all
 
 # Add the generate target

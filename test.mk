@@ -5,11 +5,11 @@
 #                        GO_TEST_COVERAGE_HTML_PATH
 
 # Include env.mk - this provides us with $(GO_BIN)
-include $(dir $(lastword $(MAKEFILE_LIST)))/env.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))env.mk
 
 # Include packages.mk - this provides us with GO_PACKAGES
 # and the GO_PKG_NAME macro.
-include $(dir $(lastword $(MAKEFILE_LIST)))/packages.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))packages.mk
 
 ifndef _HAVE_TEST_MK
 _HAVE_TEST_MK=1

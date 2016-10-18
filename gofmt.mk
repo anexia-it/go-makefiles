@@ -4,10 +4,10 @@
 # Overridable variables: GOFMT_FLAGS, GOFMT_BIN
 
 # Include env.mk - this provides us with $(GO_BIN)
-include $(dir $(lastword $(MAKEFILE_LIST)))/env.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))env.mk
 
 # Include go_files.mk - this provides us with $(GO_FILES)
-include $(dir $(lastword $(MAKEFILE_LIST)))/go_files.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))go_files.mk
 
 # Define GOFMT_FLAGS if undefined
 ifndef GOFMT_FLAGS
